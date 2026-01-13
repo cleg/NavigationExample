@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// Our app's root view. Despite being a root view, it still receives a navigation controller from the outside.
+/// This gives us the flexibility to embed this view into another navigation flow if needed.
 struct ContentView: View {
     @StateObject private var viewModel: ViewModel
     private let navigationController: any NavigationController
@@ -48,6 +50,15 @@ struct ContentView: View {
                     Label("Third child", systemImage: "3.circle")
                 }
             )
+
+            Button(
+                action: {
+                    viewModel.showThirdChildModal()
+                },
+                label: {
+                    Label("Third child modal", systemImage: "3.circle.fill")
+                }
+            )
         }
         .buttonStyle(.borderedProminent)
         .padding()
@@ -55,6 +66,9 @@ struct ContentView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Destination.self) { destination in
             destinationView(for: destination)
+        }
+        .sheet(item: $viewModel.sheet) { sheet in
+            sheetView(for: sheet)
         }
     }
 
@@ -70,6 +84,20 @@ struct ContentView: View {
             )
         case .thirdChild:
             ThirdChild(navigationController: navigationController)
+        }
+    }
+
+    @ViewBuilder
+    private func sheetView(for sheet: Sheet) -> some View {
+        switch sheet {
+        case let .thirdChildModal(onClose):
+            // For model presentation of subflows, we need to wrap them into NavigationControllerWrapper and
+            // reconfigure navigation bar if needed
+            NavigationControllerWrapper { controller in
+                ThirdChild(navigationController: controller)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .navBarCloseButton(action: onClose)
+            }
         }
     }
 }

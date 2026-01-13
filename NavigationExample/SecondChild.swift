@@ -7,7 +7,9 @@
 
 import SwiftUI
 
-/// More complex view that take parameter and returns result via callback
+/// More complex view that take parameter and returns result via callback.
+/// We use explicit parameters that are simple types and closure to return result to make view interface
+/// and side effects simple and predictable.
 struct SecondChild: View {
     @State private var name: String
     private let onComplete: (String) -> Void

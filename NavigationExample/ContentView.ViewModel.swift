@@ -14,6 +14,7 @@ extension ContentView {
         private let navigationController: any NavigationController
 
         @Published private(set) var name: String?
+        @Published var sheet: Sheet?
 
         init(navigationController: any NavigationController) {
             self.navigationController = navigationController
@@ -45,6 +46,14 @@ extension ContentView {
 
         func showThirdChild() {
             navigate(to: .thirdChild)
+        }
+
+        func showThirdChildModal() {
+            sheet = .thirdChildModal(
+                onClose: { [weak self] in
+                    self?.sheet = nil
+                }
+            )
         }
     }
 }

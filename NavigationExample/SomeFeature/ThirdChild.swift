@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/// Third child is an example of the subflow, it has its own navigation destinations.
+/// We can use it as a part of more complex flows, passing parent flow's navigation controller down to it.
+/// It can also be used as a standalone flow, wrapped in NavigationControllerWrapper.
 struct ThirdChild: View {
     private let navigationController: any NavigationController
 

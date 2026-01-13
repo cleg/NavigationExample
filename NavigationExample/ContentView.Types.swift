@@ -11,6 +11,10 @@ extension ContentView {
         case secondChild(initialName: String?, onComplete: (String?) -> Void)
         case thirdChild
     }
+
+    enum Sheet {
+        case thirdChildModal(onClose: () -> Void)
+    }
 }
 
 extension ContentView.Destination: Identifiable {
@@ -56,3 +60,11 @@ extension ContentView.Destination: Hashable {
     }
 }
 
+extension ContentView.Sheet: Identifiable {
+    var id: String {
+        switch self {
+        case .thirdChildModal:
+            return "thirdChildModal"
+        }
+    }
+}
