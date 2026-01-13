@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var viewModel: ViewModel
+    private let navigationController: any NavigationController
 
     init(navigationController: any NavigationController) {
+        self.navigationController = navigationController
         self._viewModel = StateObject(wrappedValue: ViewModel(navigationController: navigationController))
     }
 
@@ -36,6 +38,16 @@ struct ContentView: View {
                     Label("Edit name", systemImage: "pencil.circle")
                 }
             )
+            .padding(.bottom)
+
+            Button(
+                action: {
+                    viewModel.showThirdChild()
+                },
+                label: {
+                    Label("Third child", systemImage: "3.circle")
+                }
+            )
         }
         .buttonStyle(.borderedProminent)
         .padding()
@@ -56,6 +68,8 @@ struct ContentView: View {
                 initialName: initialName,
                 onComplete: onComplete
             )
+        case .thirdChild:
+            ThirdChild(navigationController: navigationController)
         }
     }
 }

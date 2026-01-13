@@ -42,5 +42,9 @@ extension ContentView {
                 )
             )
         }
+
+        func showThirdChild() {
+            navigate(to: .thirdChild)
+        }
     }
 }
